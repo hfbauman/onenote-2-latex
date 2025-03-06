@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-A simple Python script to convert a OneNote XML file to Markdown.
-MathML content (embedded in the text as CDATA or comments) is left unchanged.
-Usage: python convert.py <input_xml_file>
+A Python script to convert a OneNote XML file (or raw XML string) to Markdown.
+MathML content (embedded as CDATA or comments) is left unchanged.
+
+Usage (with file):
+    python convert.py <input_xml_file>
+Usage (with raw XML content):
+    python convert.py "<raw XML content>"
 """
 
 import sys
+import os
 import xml.etree.ElementTree as ET
 
 # Define the OneNote namespace used in the XML
@@ -41,34 +46,39 @@ def process_oe(oe, indent=0):
     else:
         prefix = ""
 
-    # Check if this OE is part of a list; if so, use a bullet and indent.
+    # If this OE is part of a list, use a bullet and indent.
     if oe.find('one:List', NS) is not None:
         bullet = "- "
         prefix = "  " * indent + bullet
     else:
         prefix = "  " * indent + prefix
 
-    # Get the text from the one:T element (this will include any MathML embedded)
+    # Get the text from the one:T element (this includes any MathML embedded)
     t_elem = oe.find('one:T', NS)
     text = get_text(t_elem).strip() if t_elem is not None else ""
 
-    # Build the Markdown for this element
     md += prefix + text + "\n"
 
-    # Process any nested one:OEChildren elements recursively
+    # Process nested one:OEChildren elements recursively
     oe_children = oe.find('one:OEChildren', NS)
     if oe_children is not None:
         for child in oe_children.findall('one:OE', NS):
             md += process_oe(child, indent=indent+1)
     return md
 
-def convert_xml_to_markdown(xml_file):
+def convert_xml_to_markdown(xml_input):
     """
-    Converts the OneNote XML file to Markdown.
-    Extracts the page title and then processes each outline.
+    Converts the OneNote XML input (a filename or raw XML string) to Markdown.
+    If xml_input is a valid filename, it is parsed using ET.parse.
+    Otherwise, it is assumed to be a raw XML string and parsed using ET.fromstring.
     """
-    tree = ET.parse(xml_file)
-    root = tree.getroot()
+    # Check if xml_input is a path to an existing file.
+    if os.path.isfile(xml_input):
+        tree = ET.parse(xml_input)
+        root = tree.getroot()
+    else:
+        root = ET.fromstring(xml_input)
+
     md = ""
 
     # Extract the page title from one:Title/one:OE/one:T (if available)
@@ -84,8 +94,8 @@ def convert_xml_to_markdown(xml_file):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Usage: python convert.py <input_xml_file>")
+        print("Usage: python convert.py <input_xml_file or raw XML content>")
         sys.exit(1)
-    input_file = sys.argv[1]
-    markdown = convert_xml_to_markdown(input_file)
+    xml_input = sys.argv[1]
+    markdown = convert_xml_to_markdown(xml_input)
     print(markdown)
