@@ -12,10 +12,8 @@ def process_element(element,output):
             process_element(child,output)
         elif child.tag == onenote_namespace + "OE":
             if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
-                # print("## " + child.find(onenote_namespace + "T").text)
                 output.write("## " + child.find(onenote_namespace + "T").text + "\n")
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
-                # print("### " + child.find(onenote_namespace + "T").text)
                 output.write("### " + child.find(onenote_namespace + "T").text + "\n")
             else:
                 process_element(child,output)
@@ -26,7 +24,6 @@ def process_element(element,output):
                 text = re.sub(r'<span\nlang=en-US>', '', text)
                 text = text.replace('&nbsp;', ' ')
 
-                # print(mathml2latex.convert(text))
                 output.write(mathml2latex.convert(text)+"\n")
 
 def main(input_filename, output_filename):
@@ -59,7 +56,3 @@ if __name__ == "__main__":
     output_filename = sys.argv[2]
 
     main(input_filename, output_filename)
-
-# current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep
-# input_filename=current_directory +"Lecture 9.xml"
-# output_filename=current_directory+"Lecture 9 converted.md"
