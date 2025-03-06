@@ -50,6 +50,16 @@ def main(input_filename, output_filename):
                 for attribute in section:
                     process_element(attribute,output)
 
-current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep
-input_filename=current_directory +"Lecture 9.xml"
-output_filename=current_directory+"Lecture 9 converted.md"
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python xml_converter.py <input_file> <output_file>")
+        sys.exit(1)
+
+    input_filename = sys.argv[1]
+    output_filename = sys.argv[2]
+
+    main(input_filename, output_filename)
+
+# current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep
+# input_filename=current_directory +"Lecture 9.xml"
+# output_filename=current_directory+"Lecture 9 converted.md"
