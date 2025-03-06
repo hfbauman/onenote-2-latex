@@ -20,6 +20,7 @@ def process_element(element,output):
             if child.text:
                 #Preprocess to remove xml tags
                 text = re.sub(r'<span.*?>|</span>', '', child.text)
+                text = text.replace('&nbsp;', ' ')
                 # print(mathml2latex.convert(text))
                 output.write(mathml2latex.convert(text))
 
