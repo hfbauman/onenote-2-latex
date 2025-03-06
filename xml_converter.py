@@ -23,8 +23,8 @@ def process_element(element,output):
                 # print(mathml2latex.convert(text))
                 output.write(mathml2latex.convert(text))
 
-
-input_filename=current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep+"trial.xml"
+current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep
+input_filename=current_directory +"trial.xml"
 output_filename=current_directory+"trial.md"
 
 input_file = open(input_filename, "r", encoding="utf-8")
