@@ -26,7 +26,7 @@ def process_element(element,output):
 
                 output.write(mathml2latex.convert(text)+"\n")
 
-def main(input_filename, output_filename):
+def convert(input_filename, output_filename):
     input_file = open(input_filename, "r", encoding="utf-8")
     input = input_file.read()
     input_file.close()
@@ -55,4 +55,4 @@ if __name__ == "__main__":
     input_filename = sys.argv[1]
     output_filename = sys.argv[2]
 
-    main(input_filename, output_filename)
+    convert(input_filename, output_filename)
