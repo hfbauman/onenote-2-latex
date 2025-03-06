@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 
-def process_element(element,preamble=""):
+def process_element(element):
     for child in element:
         if child.tag == onenote_namespace + "OEChildren":
             process_element(child)
@@ -13,7 +13,8 @@ def process_element(element,preamble=""):
             else:
                 process_element(child)
         elif child.tag == onenote_namespace + "T":
-            print(child.tag)
+            if child.text:
+                print(child.text)
 
 
 input_filename=current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep+"Lecture 9.xml"
