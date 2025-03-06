@@ -6,9 +6,14 @@ def process_element(element,preamble=""):
         if child.tag == onenote_namespace + "OEChildren":
             process_element(child)
         elif child.tag == onenote_namespace + "OE":
-            process_element(child)
+            if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
+                print("## " + child.find(onenote_namespace + "T").text)
+            elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
+                print("### " + child.find(onenote_namespace + "T").text)
+            else:
+                process_element(child)
         elif child.tag == onenote_namespace + "T":
-            print(child.text)
+            print(child.tag)
 
 
 input_filename=current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep+"Lecture 9.xml"
