@@ -12,9 +12,11 @@ def process_element(element,output):
             process_element(child,output)
         elif child.tag == onenote_namespace + "OE":
             if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
-                output.write("## " + child.find(onenote_namespace + "T").text + "\n")
+                text = child.find(onenote_namespace + "T").text
+                if text!=None: output.write("## " + mathml2latex.convert(text) + "\n")
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
-                output.write("### " + child.find(onenote_namespace + "T").text + "\n")
+                text = child.find(onenote_namespace + "T").text
+                if text!=None: output.write("### " + mathml2latex.convert(text) + "\n")
             else:
                 process_element(child,output)
         elif child.tag == onenote_namespace + "T":
