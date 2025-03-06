@@ -1,0 +1,3 @@
+[submodule "mathml2latex"]
+	path = mathml2latex
+	url = https://github.com/hfbauman/mathml2latex
