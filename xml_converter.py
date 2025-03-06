@@ -29,26 +29,27 @@ def process_element(element,output):
                 # print(mathml2latex.convert(text))
                 output.write(mathml2latex.convert(text)+"\n")
 
+def main(input_filename, output_filename):
+    input_file = open(input_filename, "r", encoding="utf-8")
+    input = input_file.read()
+    input_file.close()
+
+    import xml.etree.ElementTree as ET
+
+    tree = ET.parse(input_filename)
+    root = tree.getroot()
+
+    with open(output_filename, 'w') as output:
+        for section in root:
+            if section.tag == onenote_namespace + "Title":
+                for child in section.iter():
+                    if child.tag == onenote_namespace + "T":
+                        output.write("# " + child.text + "\n")
+
+            elif section.tag == onenote_namespace + "Outline":
+                for attribute in section:
+                    process_element(attribute,output)
+
 current_directory = os.path.dirname(os.path.realpath(__file__))+os.sep
 input_filename=current_directory +"Lecture 9.xml"
 output_filename=current_directory+"Lecture 9 converted.md"
-
-input_file = open(input_filename, "r", encoding="utf-8")
-input = input_file.read()
-input_file.close()
-
-import xml.etree.ElementTree as ET
-
-tree = ET.parse(input_filename)
-root = tree.getroot()
-
-with open(output_filename, 'w') as output:
-    for section in root:
-        if section.tag == onenote_namespace + "Title":
-            for child in section.iter():
-                if child.tag == onenote_namespace + "T":
-                    output.write("# " + child.text + "\n")
-
-        elif section.tag == onenote_namespace + "Outline":
-            for attribute in section:
-                process_element(attribute,output)
