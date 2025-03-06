@@ -13,10 +13,10 @@ def process_element(element,output):
         elif child.tag == onenote_namespace + "OE":
             if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
                 text = child.find(onenote_namespace + "T").text
-                if text!=None: output.write("## " + mathml2latex.convert(text) + "\n")
+                if text!=None: output.write("## " + mathml2latex.convert(text) + "\n\n")
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
                 text = child.find(onenote_namespace + "T").text
-                if text!=None: output.write("### " + mathml2latex.convert(text) + "\n")
+                if text!=None: output.write("### " + mathml2latex.convert(text) + "\n\n")
             else:
                 process_element(child,output)
         elif child.tag == onenote_namespace + "T":
@@ -26,7 +26,7 @@ def process_element(element,output):
                 text = re.sub(r'<span\nlang=en-US>', '', text)
                 text = text.replace('&nbsp;', ' ')
 
-                output.write(mathml2latex.convert(text)+"\n")
+                output.write(mathml2latex.convert(text)+"\n\n")
 
 def convert(input_filename, output_filename):
     input_file = open(input_filename, "r", encoding="utf-8")
