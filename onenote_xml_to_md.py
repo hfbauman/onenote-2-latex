@@ -32,8 +32,8 @@ def process_element(element,output):
             if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
                 text = child.find(onenote_namespace + "T").text
                 if text!=None:
-                    text = text.replace('&nbsp;', ' ')
-                    output.write("## " + mathml2latex.convert(text) + "\n\n")
+                    text = process_text(text)
+                    output.write("## " + text + "\n\n")
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
                 text = child.find(onenote_namespace + "T").text
                 if text!=None:
