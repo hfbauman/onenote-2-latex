@@ -7,6 +7,17 @@ import sys
 
 onenote_namespace = "{http://schemas.microsoft.com/office/onenote/2013/onenote}"
 
+def find_text(element):
+    text_elements = element.findall(onenote_namespace + "T")
+    text = ""
+    for text_element in text_elements:
+        if text_element.text:
+            text += text_element.text if text_element.text!="\n" else ""
+
+    if text.__contains__("\n"):
+        print("Warning: Found newline character in text. This may cause formatting issues.")
+    return text
+
 def process_text(text):
     #Preprocess to remove xml tags
     text = re.sub(r'<span.*?>|</span>', '', text)
@@ -33,7 +44,7 @@ def process_element(element,output):
             process_element(child,output)
         elif child.tag == onenote_namespace + "OE":
             if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
-                text = child.find(onenote_namespace + "T").text
+                text = find_text(child)
                 if text!=None:
                     text = process_text(text)
                     # Prevents math lines from being accidentally rendered as a title
@@ -42,7 +53,7 @@ def process_element(element,output):
                     else:
                         output.write("## " + text + "\n\n")
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
-                text = child.find(onenote_namespace + "T").text
+                text = find_text(child)
                 if text!=None:
                     text = text.replace('&nbsp;', ' ')
                     output.write("### " + mathml2latex.convert(text) + "\n\n")
