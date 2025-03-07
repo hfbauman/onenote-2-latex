@@ -20,6 +20,9 @@ def process_text(text):
     for utf_code, latex_code in unicode_map.items():
         utf_code = utf_code.encode('utf-8').decode('unicode_escape')
         text = text.replace(utf_code, latex_code)
+
+    # Remove any remaining xml tags, usually font and color tags
+    text = re.sub(r'<span.*?>', '', text, flags=re.DOTALL)
     
     return text
 
