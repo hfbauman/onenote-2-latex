@@ -1,3 +1,6 @@
-*.md
 driver.py
 __pycache__/
+*.xml
+!input.xml
+*.md
+!output.md

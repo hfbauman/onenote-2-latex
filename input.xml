@@ -1,0 +1,42 @@
+<one:Page xmlns:one="http://schemas.microsoft.com/office/onenote/2013/onenote" ID="{DD7FE5AA-885B-085E-32C5-DAFC2A3E93C6}{1}{E19467003457132889426620143434852678971288501}" name="Trial" dateTime="2025-03-06T18:14:47.000Z" lastModifiedTime="2025-03-06T18:16:07.000Z" pageLevel="1" isCurrentlyViewed="true" selected="partial" lang="en-US">
+  <one:QuickStyleDef index="0" name="PageTitle" fontColor="automatic" highlightColor="automatic" font="Calibri Light" fontSize="20.0" spaceBefore="0.0" spaceAfter="0.0" />
+  <one:QuickStyleDef index="1" name="p" fontColor="automatic" highlightColor="automatic" font="Calibri" fontSize="11.0" spaceBefore="0.0" spaceAfter="0.0" />
+  <one:PageSettings RTL="false" color="automatic" omHash="143474652886728101091952602609968742587923859036">
+    <one:PageSize>
+      <one:Automatic />
+    </one:PageSize>
+    <one:RuleLines visible="false" />
+  </one:PageSettings>
+  <one:Title lang="en-US" omHash="-276615323072524096096000850249267815962568780804">
+    <one:OE alignment="left" quickStyleIndex="0">
+      <one:T><![CDATA[Trial]]></one:T>
+    </one:OE>
+  </one:Title>
+  <one:Outline selected="partial" omHash="-546310247942477348464303343681730269539364306844">
+    <one:Position x="414.0" y="50.39999771118164" z="1" />
+    <one:Size width="72.0" height="13.4277172088623" />
+    <one:OEChildren selected="partial">
+      <one:OE alignment="left" quickStyleIndex="1" selected="partial">
+        <one:T selected="all"><![CDATA[]]></one:T>
+      </one:OE>
+    </one:OEChildren>
+  </one:Outline>
+  <one:Outline omHash="492753690381857382884863262787095143472758096454">
+    <one:Position x="36.0" y="86.4000015258789" z="0" />
+    <one:Size width="240.7602233886719" height="107.4723663330078" />
+    <one:OEChildren>
+      <one:OE alignment="left" quickStyleIndex="1">
+        <one:T><![CDATA[Gradient]]></one:T>
+      </one:OE>
+      <one:OE alignment="left" quickStyleIndex="1">
+        <one:T><![CDATA[]]></one:T>
+      </one:OE>
+      <one:OE alignment="left" quickStyleIndex="1">
+        <one:T><![CDATA[<span style='font-family:Calibri' lang=en-US>Let </span><!--[if mathML]><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>f</mml:mi><mml:mo>:</mml:mo><mml:mi>ℝ</mml:mi><mml:mo>→</mml:mo><mml:mi>ℝ</mml:mi></mml:math><![endif]--><span style='font-family:Calibri' lang=en-US> be a scalar field. The gradient is</span>]]></one:T>
+      </one:OE>
+      <one:OE alignment="left" quickStyleIndex="1" style="font-family:'Cambria Math';font-size:11.0pt">
+        <one:T><![CDATA[<!--[if mathML]><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mo>∇</mml:mo><mml:mi>f</mml:mi><mml:mfenced><mml:mi>x</mml:mi></mml:mfenced><mml:mo>=</mml:mo><mml:mfenced open="[" close="]"><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mfrac><mml:mrow><mml:mo>&#120597;</mml:mo><mml:mi>f</mml:mi></mml:mrow><mml:mrow><mml:mo>&#120597;</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:mfrac></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mo>⋮</mml:mo></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mfrac><mml:mrow><mml:mo>&#120597;</mml:mo><mml:mi>f</mml:mi></mml:mrow><mml:mrow><mml:mo>&#120597;</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mi>n</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mfenced></mml:math><![endif]-->]]></one:T>
+      </one:OE>
+    </one:OEChildren>
+  </one:Outline>
+</one:Page>
