@@ -47,16 +47,20 @@ def process_element(element,output):
                 text = find_text(child)
                 if text!=None:
                     text = process_text(text)
+
                     # Prevents math lines from being accidentally rendered as a title
                     if text.startswith("$$"):
                         output.write(text + "\n\n")
                     else:
                         output.write("## " + text + "\n\n")
+
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
                 text = find_text(child)
+
                 if text!=None:
                     text = text.replace('&nbsp;', ' ')
                     output.write("### " + mathml2latex.convert(text) + "\n\n")
+
             elif child.find(onenote_namespace + "List"):
                 list_element = child.find(onenote_namespace + "List")
                 number_element=list_element.find(onenote_namespace + "Number")
@@ -68,6 +72,7 @@ def process_element(element,output):
                     number = re.sub(r'[a-z]\.',"-",number)
                     text = process_text(text_element.text)
                     text=number +" "+ text
+
                 if text_element.text and bullet_element!=None:
                     text = process_text(text_element.text)
                     text="- "+ text
@@ -77,10 +82,10 @@ def process_element(element,output):
                 output.write(text + "\n\n")
             else:
                 process_element(child,output)
+
         elif child.tag == onenote_namespace + "T":
             if child.text:
                 text = process_text(child.text)
-
                 output.write(text+"\n\n")
 
 def convert(input_filename, output_filename):
