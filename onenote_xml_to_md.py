@@ -51,8 +51,11 @@ def process_element(element,output):
                 if text_element.text and number_element!=None:
                     number = number_element.attrib["text"]
                     text = process_text(text_element.text)
-                    print(number + text)
-                    output.write(number +" "+ text + "\n")
+                    
+                    # Prevent centering of math lines if they are in a list
+                    text=text.replace("$$", "$")
+
+                    output.write(number +" "+ text + "\n\n")
             else:
                 process_element(child,output)
         elif child.tag == onenote_namespace + "T":
