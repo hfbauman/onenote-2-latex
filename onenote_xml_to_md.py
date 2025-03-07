@@ -60,16 +60,20 @@ def process_element(element,output):
             elif child.find(onenote_namespace + "List"):
                 list_element = child.find(onenote_namespace + "List")
                 number_element=list_element.find(onenote_namespace + "Number")
+                bullet_element=list_element.find(onenote_namespace + "Bullet")
                 text_element = child.find(onenote_namespace + "T")
 
                 if text_element.text and number_element!=None:
                     number = number_element.attrib["text"]
                     text = process_text(text_element.text)
-                    
-                    # Prevent centering of math lines if they are in a list
-                    text=text.replace("$$", "$")
+                    text=number +" "+ text
+                if text_element.text and bullet_element!=None:
+                    text = process_text(text_element.text)
+                    text="- "+ text
 
-                    output.write(number +" "+ text + "\n\n")
+                # Prevent centering of math lines if they are in a list
+                text=text.replace("$$", "$")
+                output.write(text + "\n\n")
             else:
                 process_element(child,output)
         elif child.tag == onenote_namespace + "T":
