@@ -37,12 +37,12 @@ def process_text(text):
     return text
 
 
-def process_element(element,output):
+def process_element(element,output, onemore_headings):
     for child in element:
         if child.tag == onenote_namespace + "OEChildren":
-            process_element(child,output)
+            process_element(child,output,onemore_headings)
         elif child.tag == onenote_namespace + "OE":
-            if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1':
+            if 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '1' and onemore_headings:
                 text = find_text(child)
                 if text!=None:
                     text = process_text(text)
@@ -54,9 +54,9 @@ def process_element(element,output):
                         output.write("## " + text + "\n\n")
 
                     children = child.find(onenote_namespace + "OEChildren")
-                if children!=None:process_element(children,output)
+                if children!=None:process_element(children,output,onemore_headings)
 
-            elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
+            elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3' and onemore_headings:
                 text = find_text(child)
                 if text!=None:
                     text = process_text(text)
@@ -68,7 +68,7 @@ def process_element(element,output):
                         output.write("### " + text + "\n\n")
 
                     children = child.find(onenote_namespace + "OEChildren")
-                if children!=None:process_element(children,output)
+                if children!=None:process_element(children,output,onemore_headings)
 
             elif child.find(onenote_namespace + "List"):
                 list_element = child.find(onenote_namespace + "List")
@@ -90,14 +90,14 @@ def process_element(element,output):
                 text=text.replace("$$", "$")
                 output.write(text + "\n\n")
             else:
-                process_element(child,output)
+                process_element(child,output,onemore_headings)
 
         elif child.tag == onenote_namespace + "T":
             if child.text:
                 text = process_text(child.text)
                 output.write(text+"\n\n")
 
-def convert(input_filename, output_filename):
+def convert(input_filename, output_filename, onemore_headings=False):
     input_file = open(input_filename, "r", encoding="utf-8")
     input = input_file.read()
     input_file.close()
@@ -116,7 +116,7 @@ def convert(input_filename, output_filename):
 
             elif section.tag == onenote_namespace + "Outline":
                 for attribute in section:
-                    process_element(attribute,output)
+                    process_element(attribute,output, onemore_headings)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
