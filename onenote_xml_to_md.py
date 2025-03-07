@@ -39,6 +39,16 @@ def process_element(element,output):
                 if text!=None:
                     text = text.replace('&nbsp;', ' ')
                     output.write("### " + mathml2latex.convert(text) + "\n\n")
+            elif child.find(onenote_namespace + "List"):
+                list_element = child.find(onenote_namespace + "List")
+                number_element=list_element.find(onenote_namespace + "Number")
+                text_element = child.find(onenote_namespace + "T")
+
+                if text_element.text and number_element!=None:
+                    number = number_element.attrib["text"]
+                    text = process_text(text_element.text)
+                    print(number + text)
+                    output.write(number +" "+ text + "\n")
             else:
                 process_element(child,output)
         elif child.tag == onenote_namespace + "T":
