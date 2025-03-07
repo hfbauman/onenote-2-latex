@@ -65,6 +65,7 @@ def process_element(element,output):
 
                 if text_element.text and number_element!=None:
                     number = number_element.attrib["text"]
+                    number = re.sub(r'[a-z]\.',"-",number)
                     text = process_text(text_element.text)
                     text=number +" "+ text
                 if text_element.text and bullet_element!=None:
