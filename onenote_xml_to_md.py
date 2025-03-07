@@ -33,7 +33,11 @@ def process_element(element,output):
                 text = child.find(onenote_namespace + "T").text
                 if text!=None:
                     text = process_text(text)
-                    output.write("## " + text + "\n\n")
+                    # Prevents math lines from being accidentally rendered as a title
+                    if text.startswith("$$"):
+                        output.write(text + "\n\n")
+                    else:
+                        output.write("## " + text + "\n\n")
             elif 'quickStyleIndex' in child.attrib and child.attrib['quickStyleIndex'] == '3':
                 text = child.find(onenote_namespace + "T").text
                 if text!=None:
