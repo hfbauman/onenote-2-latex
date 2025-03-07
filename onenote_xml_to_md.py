@@ -1,10 +1,28 @@
 #!/usr/bin/env python3
 import os
 from mathml2latex import mathml2latex
+from mathml2latex.unicode_map import unicode_map
 import re
 import sys
 
 onenote_namespace = "{http://schemas.microsoft.com/office/onenote/2013/onenote}"
+
+def process_text(text):
+    #Preprocess to remove xml tags
+    text = re.sub(r'<span.*?>|</span>', '', text)
+    text = re.sub(r'<span\nlang=en-US>', '', text)
+    text = re.sub(r'<br>', '', text)
+    text = text.replace('&nbsp;', ' ')
+
+    text = mathml2latex.convert(text)
+
+    # Sometimes the unicode characters are not included by OneNote in the XML file
+    for utf_code, latex_code in unicode_map.items():
+        utf_code = utf_code.encode('utf-8').decode('unicode_escape')
+        text = text.replace(utf_code, latex_code)
+    
+    return text
+
 
 def process_element(element,output):
     for child in element:
@@ -25,12 +43,9 @@ def process_element(element,output):
                 process_element(child,output)
         elif child.tag == onenote_namespace + "T":
             if child.text:
-                #Preprocess to remove xml tags
-                text = re.sub(r'<span.*?>|</span>', '', child.text)
-                text = re.sub(r'<span\nlang=en-US>', '', text)
-                text = text.replace('&nbsp;', ' ')
+                text = process_text(child.text)
 
-                output.write(mathml2latex.convert(text)+"\n\n")
+                output.write(text+"\n\n")
 
 def convert(input_filename, output_filename):
     input_file = open(input_filename, "r", encoding="utf-8")
